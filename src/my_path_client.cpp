@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
     //create some path points...this should be done by some intelligent algorithm, but we'll hard-code it here
     geometry_msgs::PoseStamped pose_stamped;
     geometry_msgs::Pose pose;
-    pose.position.x = 0.0; // say desired x-coord is 1
-    pose.position.y = 11.5;
+    pose.position.x = 3.0; // say desired x-coord is 1
+    pose.position.y = 0.0;
     pose.position.z = 0.0; // let's hope so!
     pose.orientation.x = 0.0; //always, for motion in horizontal plane
     pose.orientation.y = 0.0; // ditto
@@ -44,6 +44,18 @@ int main(int argc, char **argv) {
     pose.orientation.w = 1.0; //sum of squares of all components of unit quaternion is 1
     pose_stamped.pose = pose;
     path_srv.request.nav_path.poses.push_back(pose_stamped);
+
+    pose_stamped.pose.position.x=3.0; 
+    pose_stamped.pose.position.y=3.0; 
+    path_srv.request.nav_path.poses.push_back(pose_stamped);
+
+    pose_stamped.pose.position.x=7.0; 
+    pose_stamped.pose.position.y=3.0; 
+    path_srv.request.nav_path.poses.push_back(pose_stamped);
+
+
+
+
     
 /*
     // some more poses...
