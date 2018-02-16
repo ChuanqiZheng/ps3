@@ -82,7 +82,10 @@ void do_spin(double spin_ang) {
           timer+=g_sample_dt;
           loop_timer.sleep(); 
           }  
-    do_halt(); 
+    g_twist_cmd.linear.x=0.0;
+    g_twist_commander.publish(g_twist_cmd);
+    loop_timer.sleep(); 
+    //do_halt(); 
 }
 
 //a function to move forward by a specified distance (in meters), then halt
@@ -98,7 +101,10 @@ void do_move(double distance) { // always assumes robot is already oriented prop
           timer+=g_sample_dt;
           loop_timer.sleep(); 
           }  
-    do_halt();
+    g_twist_cmd.linear.x=0.0;
+    g_twist_commander.publish(g_twist_cmd);
+    loop_timer.sleep(); 
+    //do_halt();
 }
 
 void do_halt() {
@@ -159,7 +165,7 @@ bool callback(example_ros_service::PathSrvRequest& request, example_ros_service:
         do_spin(spin_angle); // carry out this incremental action
         // we will just assume that this action was successful--really should have sensor feedback here
         g_current_pose.orientation = pose_desired.orientation; // assumes got to desired orientation precisely
-        yaw_current = convertPlanarQuat2Phi(g_current_pose.orientation);
+        yaw_current = yaw_desired;
         
         //FIX THE NEXT LINE, BASED ON get_yaw_and_dist()
         //do_move(1.0);  // move forward 1m...just for illustration; SHOULD compute this from subgoal pose

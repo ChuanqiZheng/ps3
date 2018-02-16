@@ -45,18 +45,22 @@ int main(int argc, char **argv) {
     pose_stamped.pose = pose;
     path_srv.request.nav_path.poses.push_back(pose_stamped);
 
-    pose_stamped.pose.position.x=3.0; 
-    pose_stamped.pose.position.y=3.0; 
+    pose_stamped.pose.position.x=8.0; 
+    pose_stamped.pose.position.y=5.0; 
     path_srv.request.nav_path.poses.push_back(pose_stamped);
 
-    pose_stamped.pose.position.x=7.0; 
-    pose_stamped.pose.position.y=3.0; 
+    pose_stamped.pose.position.x=2.0; 
+    pose_stamped.pose.position.y=5.0; 
     path_srv.request.nav_path.poses.push_back(pose_stamped);
 
+    pose_stamped.pose.position.x=0.0; 
+    pose_stamped.pose.position.y=7.0; 
+    path_srv.request.nav_path.poses.push_back(pose_stamped);
 
-
-
-    
+    pose_stamped.pose.position.x=-0.5; 
+    pose_stamped.pose.position.y=11.5; 
+    path_srv.request.nav_path.poses.push_back(pose_stamped);
+ 
 /*
     // some more poses...
     quat = convertPlanarPhi2Quaternion(1.57); // get a quaternion corresponding to this heading

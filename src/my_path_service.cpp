@@ -82,7 +82,10 @@ void do_spin(double spin_ang) {
           timer+=g_sample_dt;
           loop_timer.sleep(); 
           }  
-    do_halt(); 
+    g_twist_cmd.linear.x=0.0;
+    g_twist_commander.publish(g_twist_cmd);
+    loop_timer.sleep(); 
+    //do_halt(); 
 }
 
 //a function to move forward by a specified distance (in meters), then halt
@@ -98,7 +101,10 @@ void do_move(double distance) { // always assumes robot is already oriented prop
           timer+=g_sample_dt;
           loop_timer.sleep(); 
           }  
-    do_halt();
+    g_twist_cmd.linear.x=0.0;
+    g_twist_commander.publish(g_twist_cmd);
+    loop_timer.sleep(); 
+    //do_halt();
 }
 
 void do_halt() {
@@ -142,9 +148,9 @@ bool callback(example_ros_service::PathSrvRequest& request, example_ros_service:
         
         //WRITE THIS FNC: compute desired heading and travel distance based on current and desired poses
         get_yaw_and_dist(g_current_pose, pose_desired,travel_distance, yaw_desired);
-        ROS_INFO("pose %d: desired yaw = %f; desired (x,y) = (%f,%f)",i,yaw_desired, pose_desired.position.x,pose_desired.position.y); 
-        ROS_INFO("current (x,y) = (%f, %f)",g_current_pose.position.x,g_current_pose.position.y);
-        ROS_INFO("travel distance = %f",travel_distance);         
+        //ROS_INFO("pose %d: desired yaw = %f; desired (x,y) = (%f,%f)",i,yaw_desired, pose_desired.position.x,pose_desired.position.y); 
+        //ROS_INFO("current (x,y) = (%f, %f)",g_current_pose.position.x,g_current_pose.position.y);
+        //ROS_INFO("travel distance = %f",travel_distance);         
         
         
         // a quaternion is overkill for navigation in a plane; really only need a heading angle
@@ -152,7 +158,7 @@ bool callback(example_ros_service::PathSrvRequest& request, example_ros_service:
         // GET RID OF NEXT LINE AFTER FIXING get_yaw_and_dist()
         //yaw_desired = convertPlanarQuat2Phi(pose_desired.orientation); //from i'th desired pose
         
-        ROS_INFO("pose %d: desired yaw = %f",i,yaw_desired);        
+        //ROS_INFO("pose %d: desired yaw = %f",i,yaw_desired);        
         //yaw_current = convertPlanarQuat2Phi(g_current_pose.orientation); //our current yaw--should use a sensor
         spin_angle = yaw_desired - yaw_current; // spin this much
         spin_angle = min_spin(spin_angle);// but what if this angle is > pi?  then go the other way
